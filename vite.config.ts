@@ -1,26 +1,27 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
 
-const isDev = process.env.NODE_ENV !== 'production';
-const apiTarget = process.env.VITE_API_URL || 'http://192.168.1.3:8999';
-
-// https://vite.dev/config/
 export default defineConfig({
-  base: isDev ? '/' : '/log/',
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
+      '@': resolve(__dirname, 'src')
+    }
   },
   server: {
+    port: 3000,
+    open: true,
     proxy: {
-      '/api.ts/proxy': {
-        target: apiTarget,
+      '/api': {
+        target: 'http://localhost:8080',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\.ts\/proxy/, ''),
-      },
-    },
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
-});
+  build: {
+    outDir: 'dist',
+    sourcemap: false
+  }
+})

@@ -1,75 +1,109 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import { cache } from '@/utils/cacheManager';
+/**
+ * 路由配置
+ */
 
-const routes: RouteRecordRaw[] = [
+import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+import { setupRouterGuards } from './guards'
+
+// 静态路由
+const staticRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
-    name: 'login',
-    component: () => import('@/views/LoginView.vue'),
-    meta: { public: true }
+    name: 'Login',
+    component: () => import('@/views/login/index.vue'),
+    meta: { title: '登录' }
   },
   {
+    path: '/403',
+    name: 'Forbidden',
+    component: () => import('@/views/error/403.vue'),
+    meta: { title: '无权限' }
+  },
+  {
+    path: '/404',
+    name: 'NotFound',
+    component: () => import('@/views/error/404.vue'),
+    meta: { title: '页面不存在' }
+  }
+]
+
+// 需要认证的路由
+const authRoutes: RouteRecordRaw[] = [
+  {
     path: '/',
-    component: () => import('@/layouts/DashboardLayout.vue'),
+    component: () => import('@/layouts/DefaultLayout.vue'),
+    redirect: '/dashboard',
     children: [
       {
-        path: '',
-        name: 'home',
-        component: () => import('@/views/HomeRedirect.vue')
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        meta: { title: '控制台' }
       },
+      // 系统管理（平台级 - 超管）
       {
         path: 'system',
-        name: 'system',
-        component: () => import('@/views/SystemHome.vue')
+        name: 'System',
+        redirect: '/system/user',
+        meta: { title: '系统管理' },
+        children: [
+          {
+            path: 'user',
+            name: 'SystemUser',
+            component: () => import('@/views/system/user/index.vue'),
+            meta: { title: '账号管理', permissions: ['platform:user:view'] }
+          },
+          {
+            path: 'project',
+            name: 'SystemProject',
+            component: () => import('@/views/system/project/index.vue'),
+            meta: { title: '项目管理', permissions: ['platform:project:view'] }
+          }
+        ]
       },
+      // 项目管理（项目级 - 项目管理员）
       {
-        path: 'system/projects',
-        name: 'system-projects',
-        component: () => import('@/views/SystemProjects.vue')
-      },
-      {
-        path: 'system/accounts',
-        name: 'system-accounts',
-        component: () => import('@/views/SystemAccounts.vue')
-      },
-      {
-        path: 'settings',
-        name: 'settings',
-        component: () => import('@/views/SettingsHome.vue')
+        path: 'project-settings',
+        name: 'ProjectSettings',
+        redirect: '/project-settings/member',
+        meta: { title: '项目设置' },
+        children: [
+          {
+            path: 'member',
+            name: 'ProjectMember',
+            component: () => import('@/views/project/member/index.vue'),
+            meta: { title: '成员管理' }
+          },
+          {
+            path: 'role',
+            name: 'ProjectRole',
+            component: () => import('@/views/project/role/index.vue'),
+            meta: { title: '角色管理' }
+          },
+          {
+            path: 'permission',
+            name: 'ProjectPermission',
+            component: () => import('@/views/project/permission/index.vue'),
+            meta: { title: '权限配置' }
+          }
+        ]
       }
     ]
   },
+  // 捕获所有未匹配路由
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/'
+    redirect: '/404'
   }
-];
+]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
-});
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [...staticRoutes, ...authRoutes]
+})
 
-// 简单的登录守卫：非公开路由需登录
-router.beforeEach((to, _from, next) => {
-  const user = cache.getUserInfo();
+// 设置路由守卫
+setupRouterGuards(router)
 
-  if (to.meta.public) {
-    // 已登录访问登录页则直接跳转系统
-    if (user && to.path === '/login') {
-      next({ path: '/system' });
-      return;
-    }
-    next();
-    return;
-  }
-
-  if (!user) {
-    next({ path: '/login', query: { redirect: to.fullPath } });
-    return;
-  }
-
-  next();
-});
-
-export default router;
+export default router

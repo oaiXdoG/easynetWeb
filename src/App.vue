@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+</script>
+
 <template>
   <RouterView />
 </template>
 
-<script setup lang="ts">
-// The root simply renders the current route.
-</script>
+<style>
+/* 全局样式在 styles/main.css 中定义 */
+</style>
