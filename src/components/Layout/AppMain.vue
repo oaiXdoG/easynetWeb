@@ -13,16 +13,16 @@
 
 <style scoped>
 .app-main {
-  margin-left: 220px;
-  margin-top: 60px;
-  min-height: calc(100vh - 60px);
-  padding: 20px;
-  background: #f5f5f5;
+  margin-left: 200px;
+  margin-top: 56px;
+  min-height: calc(100vh - 56px);
+  padding: 24px;
+  background: var(--bg-body);
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .fade-enter-from,

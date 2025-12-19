@@ -1,4 +1,8 @@
 <script setup lang="ts">
+/**
+ * 控制台页面
+ * API: 无（使用 store 数据）
+ */
 import { computed } from 'vue'
 import { useAuthStore, useProjectStore } from '@/stores'
 
@@ -79,15 +83,15 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
     <div class="quick-actions">
       <h2 class="section-title">快捷操作</h2>
       <div class="action-cards">
-        <router-link to="/project-settings/member" class="action-card">
+        <router-link to="/project/member" class="action-card">
           <span class="action-icon">👥</span>
           <span class="action-text">成员管理</span>
         </router-link>
-        <router-link to="/project-settings/role" class="action-card">
+        <router-link to="/project/role" class="action-card">
           <span class="action-icon">🎭</span>
           <span class="action-text">角色管理</span>
         </router-link>
-        <router-link to="/project-settings/permission" class="action-card">
+        <router-link to="/project/permission" class="action-card">
           <span class="action-icon">🔐</span>
           <span class="action-text">权限配置</span>
         </router-link>
@@ -112,17 +116,16 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
 .page-title {
   font-size: 24px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
   margin: 0;
 }
 
 .page-desc {
   font-size: 14px;
-  color: #999;
+  color: var(--text-muted);
   margin-top: 8px;
 }
 
-/* 信息卡片 */
 .info-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -131,12 +134,11 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
 }
 
 .info-card {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 8px;
   padding: 20px;
   display: flex;
   gap: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .card-icon {
@@ -149,41 +151,15 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
   font-size: 24px;
 }
 
-.user-icon {
-  background: #e3f2fd;
-}
+.user-icon { background: #e3f2fd; }
+.project-icon { background: #fff3e0; }
+.role-icon { background: #fce4ec; }
+.perm-icon { background: #f3e5f5; }
 
-.project-icon {
-  background: #e8f5e9;
-}
-
-.role-icon {
-  background: #fff3e0;
-}
-
-.perm-icon {
-  background: #fce4ec;
-}
-
-.card-content {
-  flex: 1;
-}
-
-.card-label {
-  font-size: 12px;
-  color: #999;
-  margin-bottom: 4px;
-}
-
-.card-value {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-}
-
-.card-extra {
-  margin-top: 8px;
-}
+.card-content { flex: 1; }
+.card-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+.card-value { font-size: 16px; font-weight: 600; color: #333; }
+.card-extra { margin-top: 8px; }
 
 .badge {
   display: inline-block;
@@ -193,24 +169,14 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
   background: #f5f5f5;
   color: #666;
 }
+.badge-primary { background: #e3f2fd; color: #1976d2; }
+.badge-success { background: #e8f5e9; color: #388e3c; }
 
-.badge-primary {
-  background: #e3f2fd;
-  color: #1976d2;
-}
-
-.badge-success {
-  background: #e8f5e9;
-  color: #388e3c;
-}
-
-/* 权限列表 */
-.permissions-section {
-  background: #fff;
+.permissions-section, .quick-actions {
+  background: var(--bg-card);
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .section-title {
@@ -227,20 +193,13 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
 }
 
 .permission-tag {
-  padding: 4px 12px;
+  padding: 6px 12px;
   background: #f5f5f5;
+  border: 1px solid #eee;
   border-radius: 4px;
   font-size: 12px;
   color: #666;
   font-family: monospace;
-}
-
-/* 快捷操作 */
-.quick-actions {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .action-cards {
@@ -253,35 +212,24 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 20px;
-  background: #f9f9f9;
+  gap: 12px;
+  padding: 24px 20px;
+  background: #fafafa;
+  border: 1px solid #eee;
   border-radius: 8px;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 
 .action-card:hover {
-  background: #e8f5e9;
-  transform: translateY(-2px);
+  background: #f0f0f0;
+  border-color: #ddd;
 }
 
-.action-icon {
-  font-size: 32px;
-}
-
-.action-text {
-  font-size: 14px;
-  color: #333;
-}
+.action-icon { font-size: 32px; }
+.action-text { font-size: 14px; color: #333; }
 
 @media (max-width: 1200px) {
-  .info-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .action-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .info-cards, .action-cards { grid-template-columns: repeat(2, 1fr); }
 }
 </style>

@@ -43,6 +43,9 @@ export const request = {
   put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     return service.put(url, data, config)
   },
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+    return service.patch(url, data, config)
+  },
   delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
     return service.delete(url, config)
   }

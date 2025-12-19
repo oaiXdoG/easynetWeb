@@ -1,29 +1,36 @@
 /**
  * 路由配置
+ *
+ * 路由与页面对应关系：
+ * /login          → views/Auth/Login.vue
+ * /dashboard      → views/Dashboard/Index.vue
+ * /system/*       → views/System/*.vue        (API: api/system)
+ * /project/*      → views/Project/*.vue       (API: api/project)
+ * /403, /404      → views/Error/*.vue
  */
 
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { setupRouterGuards } from './guards'
 
-// 静态路由
+// 静态路由（无需登录）
 const staticRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import('@/views/login/index.vue'),
+    component: () => import('@/views/Auth/Login.vue'),
     meta: { title: '登录' }
   },
   {
     path: '/403',
     name: 'Forbidden',
-    component: () => import('@/views/error/403.vue'),
+    component: () => import('@/views/Error/403.vue'),
     meta: { title: '无权限' }
   },
   {
     path: '/404',
     name: 'NotFound',
-    component: () => import('@/views/error/404.vue'),
+    component: () => import('@/views/Error/404.vue'),
     meta: { title: '页面不存在' }
   }
 ]
@@ -35,13 +42,15 @@ const authRoutes: RouteRecordRaw[] = [
     component: () => import('@/layouts/DefaultLayout.vue'),
     redirect: '/dashboard',
     children: [
+      // 控制台
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: () => import('@/views/dashboard/index.vue'),
+        component: () => import('@/views/Dashboard/Index.vue'),
         meta: { title: '控制台' }
       },
-      // 系统管理（平台级 - 超管）
+
+      // 系统管理 (超管) - 对应 api/system
       {
         path: 'system',
         name: 'System',
@@ -51,46 +60,48 @@ const authRoutes: RouteRecordRaw[] = [
           {
             path: 'user',
             name: 'SystemUser',
-            component: () => import('@/views/system/user/index.vue'),
-            meta: { title: '账号管理', permissions: ['platform:user:view'] }
+            component: () => import('@/views/System/User.vue'),
+            meta: { title: '账号管理' }
           },
           {
             path: 'project',
             name: 'SystemProject',
-            component: () => import('@/views/system/project/index.vue'),
-            meta: { title: '项目管理', permissions: ['platform:project:view'] }
+            component: () => import('@/views/System/Project.vue'),
+            meta: { title: '项目管理' }
           }
         ]
       },
-      // 项目管理（项目级 - 项目管理员）
+
+      // 项目设置 - 对应 api/project
       {
-        path: 'project-settings',
-        name: 'ProjectSettings',
-        redirect: '/project-settings/member',
+        path: 'project',
+        name: 'Project',
+        redirect: '/project/member',
         meta: { title: '项目设置' },
         children: [
           {
             path: 'member',
             name: 'ProjectMember',
-            component: () => import('@/views/project/member/index.vue'),
+            component: () => import('@/views/Project/Member.vue'),
             meta: { title: '成员管理' }
           },
           {
             path: 'role',
             name: 'ProjectRole',
-            component: () => import('@/views/project/role/index.vue'),
+            component: () => import('@/views/Project/Role.vue'),
             meta: { title: '角色管理' }
           },
           {
             path: 'permission',
             name: 'ProjectPermission',
-            component: () => import('@/views/project/permission/index.vue'),
+            component: () => import('@/views/Project/Permission.vue'),
             meta: { title: '权限配置' }
           }
         ]
       }
     ]
   },
+
   // 捕获所有未匹配路由
   {
     path: '/:pathMatch(.*)*',

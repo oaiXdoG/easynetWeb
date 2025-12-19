@@ -5,6 +5,12 @@ import router from './router'
 import { setupDirectives } from './directives'
 import './styles/main.css'
 
+// 初始化主题（在 app 挂载前执行，避免闪烁）
+const savedTheme = localStorage.getItem('theme')
+if (savedTheme === 'dark') {
+  document.documentElement.classList.add('dark')
+}
+
 const app = createApp(App)
 
 // 注册 Pinia
