@@ -2,10 +2,12 @@
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/hooks'
+import '@/styles/views/auth/login.css'
 
 const router = useRouter()
 const route = useRoute()
 const { login } = useAuth()
+const isDark = ref(localStorage.getItem('theme') === 'dark')
 
 // 表单数据
 const formData = reactive({
@@ -18,6 +20,19 @@ const formData = reactive({
 const loading = ref(false)
 // 错误消息
 const errorMsg = ref('')
+
+function applyTheme() {
+  document.documentElement.classList.toggle('dark', isDark.value)
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+}
+
+function toggleDarkMode() {
+  isDark.value = !isDark.value
+  applyTheme()
+}
+
+// 初始化主题
+applyTheme()
 
 // 提交登录
 async function handleSubmit() {
@@ -57,6 +72,11 @@ function fillTestAccount(type: 'admin' | 'user') {
 <template>
   <div class="login-page">
     <div class="login-container">
+      <div class="login-top">
+        <button class="login-toggle-btn" type="button" @click="toggleDarkMode" :title="isDark ? '切换浅色' : '切换深色'">
+          <span class="material-icons">{{ isDark ? 'light_mode' : 'dark_mode' }}</span>
+        </button>
+      </div>
       <div class="login-header">
         <h1 class="login-title">EasyNet</h1>
         <p class="login-subtitle">多应用管理平台</p>

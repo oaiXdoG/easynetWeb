@@ -34,6 +34,15 @@ const menuGroups = computed<MenuGroup[]>(() => {
     ]
   })
 
+  // 日志分组
+  groups.push({
+    title: '日志',
+    items: [
+      { icon: 'sports_esports', label: '游戏日志', path: '/log/game' },
+      { icon: 'dns', label: '服务器信息日志', path: '/log/server' }
+    ]
+  })
+
   // 项目设置分组
   groups.push({
     title: '项目设置',
@@ -43,6 +52,7 @@ const menuGroups = computed<MenuGroup[]>(() => {
       { icon: 'lock', label: '权限配置', path: '/project/permission' }
     ]
   })
+
 
   // 系统管理（超管专用）
   if (isSuperAdmin.value) {

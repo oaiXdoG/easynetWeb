@@ -50,6 +50,28 @@ const authRoutes: RouteRecordRaw[] = [
         meta: { title: '控制台' }
       },
 
+      // 日志中心
+      {
+        path: 'log',
+        name: 'Log',
+        redirect: '/log/game',
+        component: () => import('@/layouts/DefaultLayout.vue'),
+        meta: { title: '日志' },
+        children: [
+          {
+            path: 'game',
+            name: 'LogGame',
+            component: () => import('@/views/Log/Game.vue'),
+            meta: { title: '游戏日志' }
+          },
+          {
+            path: 'server',
+            name: 'LogServer',
+            component: () => import('@/views/Log/Server.vue'),
+            meta: { title: '服务器信息日志' }
+          }
+        ]
+      },
       // 系统管理 (超管) - 对应 api/system
       {
         path: 'system',
@@ -98,7 +120,7 @@ const authRoutes: RouteRecordRaw[] = [
             meta: { title: '权限配置' }
           }
         ]
-      }
+      },
     ]
   },
 
