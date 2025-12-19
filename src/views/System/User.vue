@@ -158,22 +158,22 @@ onMounted(() => loadUsers())
 </template>
 
 <style scoped>
-.page-container { background: #fff; border-radius: 8px; padding: 24px; }
+.page-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; }
 .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
 .page-title { font-size: 20px; font-weight: 600; margin: 0; }
 .filter-bar { display: flex; gap: 16px; margin-bottom: 20px; }
-.search-input { width: 300px; height: 36px; padding: 0 12px; border: 1px solid #ddd; border-radius: 4px; }
-.status-select { height: 36px; padding: 0 12px; border: 1px solid #ddd; border-radius: 4px; min-width: 120px; }
+.search-input { width: 300px; height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
+.status-select { height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; min-width: 120px; background: var(--bg-card); color: var(--text-color); }
 .table-wrapper { overflow-x: auto; }
 .data-table { width: 100%; border-collapse: collapse; }
-.data-table th, .data-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
-.data-table th { background: #fafafa; color: #666; font-weight: 500; }
+.data-table th, .data-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+.data-table th { background: var(--hover-bg); color: var(--text-secondary); font-weight: 500; }
 .loading-cell, .empty-cell { text-align: center; color: #999; padding: 40px !important; }
-.badge { display: inline-block; padding: 2px 8px; font-size: 12px; border-radius: 4px; background: #f5f5f5; color: #666; }
-.badge-primary { background: #e3f2fd; color: #1976d2; }
+.badge { display: inline-block; padding: 2px 8px; font-size: 12px; border-radius: 4px; background: var(--hover-bg); color: var(--text-secondary); }
+.badge-primary { background: rgba(64, 158, 255, 0.15); color: #1976d2; }
 .status-tag { padding: 2px 8px; border-radius: 4px; font-size: 12px; }
-.status-tag.active { background: #e8f5e9; color: #388e3c; }
-.status-tag.inactive { background: #ffebee; color: #c62828; }
+.status-tag.active { background: rgba(56, 142, 60, 0.15); color: #38a169; }
+.status-tag.inactive { background: rgba(198, 40, 40, 0.15); color: #e74c3c; }
 .actions-cell { white-space: nowrap; }
 .btn-link { background: none; border: none; color: #42b883; cursor: pointer; padding: 4px 8px; font-size: 14px; }
 .btn-link:hover { text-decoration: underline; }
@@ -182,16 +182,16 @@ onMounted(() => loadUsers())
 .btn-link.danger { color: #e74c3c; }
 .btn-link:disabled { color: #ccc; cursor: not-allowed; }
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal { background: #fff; border-radius: 8px; width: 500px; max-width: 90%; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #eee; }
+.modal { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; width: 500px; max-width: 90%; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); }
 .modal-header h2 { font-size: 18px; margin: 0; }
 .modal-close { background: none; border: none; font-size: 24px; color: #999; cursor: pointer; }
 .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
 .form-item { display: flex; flex-direction: column; gap: 6px; }
-.form-item label { font-size: 14px; color: #333; }
-.form-item input { height: 36px; padding: 0 12px; border: 1px solid #ddd; border-radius: 4px; }
-.form-item input:disabled { background: #f5f5f5; }
-.modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid #eee; }
-.btn { padding: 8px 16px; border-radius: 4px; font-size: 14px; cursor: pointer; border: 1px solid #ddd; background: #fff; }
+.form-item label { font-size: 14px; color: var(--text-color); }
+.form-item input { height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
+.form-item input:disabled { background: var(--hover-bg); }
+.modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border-color); }
+.btn { padding: 8px 16px; border-radius: 4px; font-size: 14px; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-card); }
 .btn-primary { background: #42b883; border-color: #42b883; color: #fff; }
 </style>

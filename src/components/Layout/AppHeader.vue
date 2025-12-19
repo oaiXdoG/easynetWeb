@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore, useProjectStore } from '@/stores'
 import type { ProjectListItem } from '@/types'
@@ -79,6 +79,23 @@ function handleClickOutside(e: MouseEvent) {
     showUserDropdown.value = false
   }
 }
+
+function toggleUserMenu() {
+  showUserDropdown.value = !showUserDropdown.value
+}
+
+function toggleProjectMenu() {
+  showProjectDropdown.value = !showProjectDropdown.value
+}
+
+// 互斥与外部点击收起
+watch(showUserDropdown, (val) => {
+  if (val) showProjectDropdown.value = false
+})
+
+watch(showProjectDropdown, (val) => {
+  if (val) showUserDropdown.value = false
+})
 </script>
 
 <template>
@@ -99,7 +116,7 @@ function handleClickOutside(e: MouseEvent) {
 
       <!-- 用户信息 -->
       <div class="user-menu" @click.stop>
-        <div class="user-info" @click="showUserDropdown = !showUserDropdown">
+        <div class="user-info" @click="toggleUserMenu">
           <div class="avatar">
             <img v-if="currentUser?.avatar" :src="currentUser.avatar" alt="avatar" />
             <span v-else class="avatar-text">{{ currentUser?.nickname?.charAt(0) || 'U' }}</span>
@@ -108,7 +125,7 @@ function handleClickOutside(e: MouseEvent) {
           <span class="arrow" :class="{ open: showUserDropdown }">▾</span>
         </div>
 
-        <div class="user-dropdown" v-show="showUserDropdown">
+        <div class="user-dropdown" v-show="showUserDropdown" @mouseleave="showUserDropdown = false">
           <div class="dropdown-item">
             <span class="material-icons">person</span>
             <span>个人设置</span>
@@ -132,13 +149,13 @@ function handleClickOutside(e: MouseEvent) {
       <div class="project-switcher" v-if="userProjects.length > 0" @click.stop>
         <div
           class="current-project"
-          @click="showProjectDropdown = !showProjectDropdown"
+          @click="toggleProjectMenu"
         >
           <span class="project-name">{{ truncate(currentProject?.projectName || '选择项目') }}</span>
           <span class="arrow" :class="{ open: showProjectDropdown }">▾</span>
         </div>
 
-        <div class="project-dropdown" v-show="showProjectDropdown">
+        <div class="project-dropdown" v-show="showProjectDropdown" @mouseleave="showProjectDropdown = false">
           <div
             class="project-item"
             v-for="project in userProjects"
@@ -146,8 +163,8 @@ function handleClickOutside(e: MouseEvent) {
             :class="{ active: project.id === currentProject?.id }"
             @click="handleSwitchProject(project)"
           >
+            <span class="check" :class="{ visible: project.id === currentProject?.id }">✓</span>
             <span class="project-item-name">{{ project.projectName }}</span>
-            <span class="check" v-if="project.id === currentProject?.id">✓</span>
           </div>
         </div>
       </div>
@@ -159,7 +176,8 @@ function handleClickOutside(e: MouseEvent) {
 .app-header {
   height: 56px;
   background: var(--bg-body);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: none;
+  box-shadow: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -171,35 +189,41 @@ function handleClickOutside(e: MouseEvent) {
   z-index: 100;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-}
+
 
 .logo {
   cursor: pointer;
 }
 
 .logo-text {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   color: var(--primary-color);
+  letter-spacing: 0.2px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transform: translate(0px, 4px);
 }
 
 /* 右侧区域 */
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 18px;
+  transform: translate(-36px, 4px);
 }
 
 /* 图标按钮 */
 .icon-btn {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: none;
   background: transparent;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -214,7 +238,7 @@ function handleClickOutside(e: MouseEvent) {
 }
 
 .icon-btn .material-icons {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 /* 用户信息 */
@@ -225,10 +249,10 @@ function handleClickOutside(e: MouseEvent) {
 .user-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
   padding: 4px 8px;
-  border-radius: 20px;
+  border-radius: 999px;
   transition: background 0.2s;
 }
 
@@ -237,11 +261,11 @@ function handleClickOutside(e: MouseEvent) {
 }
 
 .avatar {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   overflow: hidden;
-  background: #9c27b0;
+  background: #7c3aed;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -256,16 +280,16 @@ function handleClickOutside(e: MouseEvent) {
 .avatar-text {
   color: #fff;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .username {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-color);
 }
 
 .arrow {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
   transition: transform 0.2s;
 }
@@ -276,14 +300,15 @@ function handleClickOutside(e: MouseEvent) {
 
 .user-dropdown {
   position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
   min-width: 140px;
-  background: var(--bg-body);
+  text-align: center;
+  background: var(--bg-card);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  padding: 8px 0;
+  padding: 10px 0 8px;
   z-index: 1000;
 }
 
@@ -327,11 +352,13 @@ function handleClickOutside(e: MouseEvent) {
   padding: 6px 12px;
   cursor: pointer;
   transition: background 0.2s;
-  border-radius: 6px;
+  border-radius: 10px;
+  border: 1px solid transparent;
 }
 
 .current-project:hover {
   background: var(--hover-bg);
+  border-color: var(--border-color);
 }
 
 .project-name {
@@ -342,24 +369,27 @@ function handleClickOutside(e: MouseEvent) {
 .project-dropdown {
   position: absolute;
   top: 100%;
-  right: 0;
-  margin-top: 8px;
-  min-width: 160px;
-  background: var(--bg-body);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  padding: 8px 0;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 150px;
+  max-width: 220px;
+  width: max-content;
+  background: var(--bg-card);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  padding: 10px 0 8px;
   z-index: 1000;
 }
 
 .project-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
+  justify-content: flex-start;
+  padding: 10px 12px;
   cursor: pointer;
   transition: background 0.2s;
   color: var(--text-color);
+  gap: 8px;
 }
 
 .project-item:hover {
@@ -372,9 +402,17 @@ function handleClickOutside(e: MouseEvent) {
 
 .project-item-name {
   font-size: 14px;
+  flex: 1;
+  text-align: left;
 }
 
 .check {
+  width: 14px;
   color: var(--primary-color);
+  visibility: hidden;
+}
+
+.check.visible {
+  visibility: visible;
 }
 </style>

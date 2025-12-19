@@ -158,7 +158,7 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
 
 .card-content { flex: 1; }
 .card-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-.card-value { font-size: 16px; font-weight: 600; color: #333; }
+.card-value { font-size: 16px; font-weight: 600; color: var(--text-color); }
 .card-extra { margin-top: 8px; }
 
 .badge {
@@ -166,11 +166,11 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
   padding: 2px 8px;
   font-size: 12px;
   border-radius: 4px;
-  background: #f5f5f5;
-  color: #666;
+  background: var(--hover-bg);
+  color: var(--text-secondary);
 }
-.badge-primary { background: #e3f2fd; color: #1976d2; }
-.badge-success { background: #e8f5e9; color: #388e3c; }
+.badge-primary { background: rgba(64, 158, 255, 0.15); color: #1976d2; }
+.badge-success { background: rgba(56, 142, 60, 0.15); color: #38a169; }
 
 .permissions-section, .quick-actions {
   background: var(--bg-card);
@@ -182,7 +182,7 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
 .section-title {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
   margin: 0 0 16px;
 }
 
@@ -194,11 +194,11 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
 
 .permission-tag {
   padding: 6px 12px;
-  background: #f5f5f5;
-  border: 1px solid #eee;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   font-family: monospace;
 }
 
@@ -214,20 +214,20 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
   align-items: center;
   gap: 12px;
   padding: 24px 20px;
-  background: #fafafa;
-  border: 1px solid #eee;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.2s;
 }
 
 .action-card:hover {
-  background: #f0f0f0;
-  border-color: #ddd;
+  background: var(--hover-bg);
+  border-color: var(--border-color);
 }
 
 .action-icon { font-size: 32px; }
-.action-text { font-size: 14px; color: #333; }
+.action-text { font-size: 14px; color: var(--text-color); }
 
 @media (max-width: 1200px) {
   .info-cards, .action-cards { grid-template-columns: repeat(2, 1fr); }

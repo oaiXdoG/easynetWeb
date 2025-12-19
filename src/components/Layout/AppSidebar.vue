@@ -90,10 +90,10 @@ function handleNavigate(path: string) {
 
 <style scoped>
 .app-sidebar {
-  width: 200px;
+  width: 210px;
   height: calc(100vh - 56px);
   background: var(--bg-body);
-  border-right: 1px solid var(--border-color);
+  border-right: none;
   position: fixed;
   top: 56px;
   left: 0;
@@ -103,31 +103,32 @@ function handleNavigate(path: string) {
 
 /* 导航 */
 .sidebar-nav {
-  padding: 16px 0;
+  padding: 14px 0;
 }
 
 .nav-group {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .group-title {
-  padding: 8px 20px;
+  padding: 8px 18px;
   font-size: 12px;
   color: var(--text-muted);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.2px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 20px;
+  gap: 10px;
+  padding: 10px 18px;
   margin: 2px 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .nav-item:hover {
@@ -138,12 +139,13 @@ function handleNavigate(path: string) {
 .nav-item.active {
   color: var(--primary-color);
   background: var(--active-bg);
+  border: 1px solid var(--border-color);
 }
 
 .nav-icon {
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -15,10 +15,8 @@ export function setupRouterGuards(router: Router) {
     const projectStore = useProjectStore()
     const menuStore = useMenuStore()
 
-    // 设置页面标题
-    document.title = to.meta.title
-      ? `${to.meta.title} - EasyNet`
-      : 'EasyNet 管理平台'
+    // 固定站点标题（不随路由变化）
+    document.title = 'EasyNet 管理平台'
 
     // 白名单路由直接放行
     if (whiteList.includes(to.path)) {

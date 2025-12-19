@@ -11,21 +11,21 @@
   --text-color: #333;
   --text-secondary: #666;
   --text-muted: #999;
-  --border-color: #eee;
-  --hover-bg: rgba(0,0,0,0.05);
+  --border-color: #e5e7ec;
+  --hover-bg: rgba(0, 0, 0, 0.05);
   --active-bg: #ecf5ff;
   --primary-color: #409eff;
 }
 
 html.dark {
   --bg-body: #16161a;
-  --bg-card: #fff;
-  --text-color: #e0e0e0;
-  --text-secondary: #a0a0a0;
-  --text-muted: #707070;
-  --border-color: transparent;
-  --hover-bg: rgba(255,255,255,0.1);
-  --active-bg: rgba(255,255,255,0.15);
+  --bg-card: #1f1f24;
+  --text-color: #e6e8ec;
+  --text-secondary: #b3b6bd;
+  --text-muted: #8b8f99;
+  --border-color: #2b2f38;
+  --hover-bg: rgba(255, 255, 255, 0.08);
+  --active-bg: rgba(255, 255, 255, 0.12);
 }
 
 html, body {
@@ -38,8 +38,15 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s, color 0.3s;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -111,9 +118,9 @@ img {
   font-size: 14px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid #ddd;
-  background: #fff;
-  color: #333;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-color);
   transition: all 0.3s;
 }
 

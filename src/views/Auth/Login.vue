@@ -133,7 +133,8 @@ function fillTestAccount(type: 'admin' | 'user') {
 .login-container {
   width: 400px;
   padding: 40px;
-  background: #fff;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
@@ -152,7 +153,7 @@ function fillTestAccount(type: 'admin' | 'user') {
 
 .login-subtitle {
   font-size: 14px;
-  color: #999;
+  color: var(--text-muted);
   margin-top: 8px;
 }
 
@@ -170,17 +171,19 @@ function fillTestAccount(type: 'admin' | 'user') {
 
 .form-label {
   font-size: 14px;
-  color: #333;
+  color: var(--text-color);
   font-weight: 500;
 }
 
 .form-input {
   height: 44px;
   padding: 0 16px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 14px;
-  transition: border-color 0.3s;
+  background: var(--bg-card);
+  color: var(--text-color);
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
 }
 
 .form-input:focus {
@@ -198,7 +201,7 @@ function fillTestAccount(type: 'admin' | 'user') {
   gap: 8px;
   cursor: pointer;
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .checkbox-label input {
@@ -209,8 +212,8 @@ function fillTestAccount(type: 'admin' | 'user') {
 
 .error-message {
   padding: 10px;
-  background: #fff2f0;
-  border: 1px solid #ffccc7;
+  background: rgba(255, 77, 79, 0.1);
+  border: 1px solid rgba(255, 77, 79, 0.4);
   border-radius: 4px;
   color: #ff4d4f;
   font-size: 14px;
@@ -239,12 +242,12 @@ function fillTestAccount(type: 'admin' | 'user') {
 .test-accounts {
   margin-top: 32px;
   padding-top: 20px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-color);
 }
 
 .test-title {
   font-size: 12px;
-  color: #999;
+  color: var(--text-muted);
   margin: 0 0 12px;
 }
 
@@ -256,17 +259,17 @@ function fillTestAccount(type: 'admin' | 'user') {
 .test-btn {
   flex: 1;
   padding: 8px 12px;
-  background: #f5f5f5;
-  border: 1px solid #ddd;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .test-btn:hover {
-  background: #e8e8e8;
+  background: rgba(66, 184, 131, 0.15);
   border-color: #42b883;
   color: #42b883;
 }

@@ -13,10 +13,10 @@
 
 <style scoped>
 .app-main {
-  margin-left: 200px;
+  margin-left: 210px;
   margin-top: 56px;
   min-height: calc(100vh - 56px);
-  padding: 24px;
+  padding: 22px;
   background: var(--bg-body);
 }
 
