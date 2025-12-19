@@ -29,18 +29,18 @@ export interface Menu {
 // 菜单树节点
 export interface MenuTreeNode {
   id: number
-  parentId: number
   menuCode: string
   menuName: string
   menuType: MenuType
-  icon: string | null
-  path: string | null
-  component: string | null
-  redirect: string | null
-  isVisible: boolean
-  isCache: boolean
-  isExternal: boolean
-  sortOrder: number
+  parentId?: number
+  icon?: string | null
+  path?: string | null
+  component?: string | null
+  redirect?: string | null
+  isVisible?: boolean
+  isCache?: boolean
+  isExternal?: boolean
+  sortOrder?: number
   children?: MenuTreeNode[]
 }
 

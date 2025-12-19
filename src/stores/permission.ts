@@ -3,7 +3,7 @@
  */
 
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useProjectStore } from './project'
 
 export const usePermissionStore = defineStore('permission', () => {

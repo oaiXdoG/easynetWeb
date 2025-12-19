@@ -10,7 +10,7 @@ const whiteList = ['/login', '/404', '/403']
 
 export function setupRouterGuards(router: Router) {
   // 前置守卫
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, _from, next) => {
     const authStore = useAuthStore()
     const projectStore = useProjectStore()
     const menuStore = useMenuStore()
@@ -64,7 +64,7 @@ export function setupRouterGuards(router: Router) {
   })
 
   // 后置守卫
-  router.afterEach((to, from) => {
+  router.afterEach((_to, _from) => {
     // 可以在这里添加页面访问日志等
   })
 }

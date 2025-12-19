@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import '@/styles/views/error/error.css'
 
 const router = useRouter()
 </script>
@@ -16,15 +17,3 @@ const router = useRouter()
     </div>
   </div>
 </template>
-
-<style scoped>
-.error-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-body); }
-.error-content { text-align: center; }
-.error-code { font-size: 120px; font-weight: bold; color: var(--text-muted); margin: 0; line-height: 1; }
-.error-message { font-size: 20px; color: var(--text-secondary); margin: 20px 0 40px; }
-.error-actions { display: flex; gap: 16px; justify-content: center; }
-.btn { padding: 10px 24px; font-size: 14px; border-radius: 4px; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-color); }
-.btn:hover { border-color: #42b883; color: #42b883; }
-.btn-primary { background: #42b883; border-color: #42b883; color: #fff; }
-.btn-primary:hover { background: #33a06f; }
-</style>

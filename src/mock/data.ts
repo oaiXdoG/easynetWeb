@@ -1078,8 +1078,8 @@ export const mockLoginResponse = {
     },
     // 登录后返回用户可访问的项目列表
     projects: [
-      { id: 1, projectCode: 'ecommerce', projectName: '电商管理系统', isDefault: true },
-      { id: 2, projectCode: 'crm', projectName: 'CRM客户管理', isDefault: false }
+      { id: 1, projectCode: 'ecommerce', projectName: '电商管理系统', description: null, logo: null, status: 1, isDefault: true },
+      { id: 2, projectCode: 'crm', projectName: 'CRM客户管理', description: null, logo: null, status: 1, isDefault: false }
     ],
     // 默认项目的权限信息
     currentProject: {

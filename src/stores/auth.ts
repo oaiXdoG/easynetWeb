@@ -4,7 +4,7 @@
 
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { User, LoginParams, LoginResult, ProjectListItem, CurrentProjectContext } from '@/types'
+import type { User, LoginParams, LoginResult, ProjectListItem } from '@/types'
 import { tokenStorage, storage } from '@/utils/storage'
 import { mockLoginResponse } from '@/mock/data'
 

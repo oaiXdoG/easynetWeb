@@ -6,6 +6,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useProjectStore } from '@/stores'
 import { mockPermissions } from '@/mock/data'
+import '@/styles/views/project/permission.css'
 // import { projectApi } from '@/api'
 
 const projectStore = useProjectStore()
@@ -79,7 +80,7 @@ onMounted(() => loadPermissions())
 </script>
 
 <template>
-  <div class="page-container">
+  <div class="page-container project-permission-page">
     <div class="page-header">
       <div>
         <h1 class="page-title">权限配置</h1>
@@ -156,45 +157,3 @@ onMounted(() => loadPermissions())
     </div>
   </div>
 </template>
-
-<style scoped>
-.page-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-.page-title { font-size: 20px; font-weight: 600; margin: 0; }
-.page-desc { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
-.filter-bar { margin-bottom: 20px; }
-.search-input { width: 300px; height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
-.permission-group { margin-bottom: 24px; }
-.group-header { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 12px; }
-.group-title { font-size: 16px; font-weight: 600; color: var(--text-color); }
-.group-count { font-size: 12px; color: var(--text-muted); }
-.permission-list { display: flex; flex-direction: column; gap: 8px; }
-.permission-item { display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--hover-bg); border-radius: 6px; }
-.permission-item:hover { background: rgba(64, 158, 255, 0.12); }
-.perm-main { flex: 1; }
-.perm-name { font-size: 14px; font-weight: 500; color: var(--text-color); }
-.perm-code { font-size: 12px; color: #42b883; font-family: monospace; margin-top: 2px; }
-.perm-type { padding: 2px 8px; border-radius: 4px; font-size: 12px; background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color); }
-.perm-type.action { background: rgba(64, 158, 255, 0.15); color: #1976d2; }
-.perm-type.menu { background: rgba(66, 184, 131, 0.15); color: #2f9e68; }
-.perm-type.data { background: rgba(245, 124, 0, 0.15); color: #f57c00; }
-.perm-actions { display: flex; gap: 4px; }
-.btn-icon { background: none; border: none; cursor: pointer; padding: 4px; font-size: 14px; opacity: 0.6; }
-.btn-icon:hover { opacity: 1; }
-.empty-state, .loading-state { text-align: center; padding: 60px; color: var(--text-muted); }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; width: 500px; max-width: 90%; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); }
-.modal-header h2 { font-size: 18px; margin: 0; }
-.modal-close { background: none; border: none; font-size: 24px; color: #999; cursor: pointer; }
-.modal-body { padding: 20px; }
-.form-item { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
-.form-item label { font-size: 14px; color: var(--text-color); }
-.form-item input, .form-item select, .form-item textarea { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
-.form-item input { height: 36px; }
-.form-item input:disabled { background: var(--hover-bg); }
-.form-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-.modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border-color); }
-.btn { padding: 8px 16px; border-radius: 4px; font-size: 14px; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-card); }
-.btn-primary { background: #42b883; border-color: #42b883; color: #fff; }
-</style>

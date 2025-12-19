@@ -2,9 +2,8 @@
  * 项目上下文 Hook
  */
 
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { useAuthStore, useProjectStore, useMenuStore } from '@/stores'
-import type { ProjectListItem } from '@/types'
 
 export function useProject() {
   const authStore = useAuthStore()

@@ -6,6 +6,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useProjectStore } from '@/stores'
 import { mockRoles, mockRolePermissions, mockPermissions } from '@/mock/data'
+import '@/styles/views/project/role.css'
 // import { projectApi } from '@/api'
 
 const projectStore = useProjectStore()
@@ -67,7 +68,7 @@ onMounted(() => loadRoles())
 </script>
 
 <template>
-  <div class="page-container">
+  <div class="page-container project-role-page">
     <div class="page-header">
       <div>
         <h1 class="page-title">角色管理</h1>
@@ -154,48 +155,3 @@ onMounted(() => loadRoles())
     </div>
   </div>
 </template>
-
-<style scoped>
-.page-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-.page-title { font-size: 20px; font-weight: 600; margin: 0; }
-.page-desc { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
-.role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.role-card { border: 1px solid var(--border-color); background: var(--bg-card); border-radius: 8px; padding: 20px; }
-.role-header { margin-bottom: 12px; }
-.role-name { font-size: 16px; font-weight: 600; color: var(--text-color); display: flex; align-items: center; gap: 8px; }
-.admin-badge { font-size: 12px; padding: 2px 6px; background: rgba(56, 142, 60, 0.15); color: #38a169; border-radius: 4px; font-weight: normal; }
-.role-code { font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 4px; }
-.role-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
-.role-stats { display: flex; gap: 24px; margin-bottom: 16px; padding: 12px; background: var(--hover-bg); border-radius: 4px; }
-.stat-item { display: flex; flex-direction: column; gap: 4px; }
-.stat-label { font-size: 12px; color: var(--text-muted); }
-.stat-value { font-size: 18px; font-weight: 600; color: var(--text-color); }
-.role-actions { display: flex; gap: 8px; }
-.empty-state, .loading-state { text-align: center; padding: 60px; color: var(--text-muted); }
-.btn { padding: 8px 16px; border-radius: 4px; font-size: 14px; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-card); }
-.btn-sm { padding: 4px 12px; font-size: 12px; }
-.btn-primary { background: #42b883; border-color: #42b883; color: #fff; }
-.btn-danger { color: #e74c3c; border-color: #e74c3c; }
-.btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; width: 500px; max-width: 90%; }
-.modal-lg { width: 700px; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); }
-.modal-header h2 { font-size: 18px; margin: 0; }
-.modal-close { background: none; border: none; font-size: 24px; color: #999; cursor: pointer; }
-.modal-body { padding: 20px; max-height: 60vh; overflow-y: auto; }
-.form-item { margin-bottom: 16px; display: flex; flex-direction: column; gap: 6px; }
-.form-item label { font-size: 14px; color: var(--text-color); }
-.form-item input, .form-item textarea { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
-.form-item input { height: 36px; }
-.form-item input:disabled { background: var(--hover-bg); }
-.permission-list { display: flex; flex-direction: column; gap: 8px; }
-.permission-item { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; cursor: pointer; background: var(--bg-card); }
-.permission-item:hover { background: var(--hover-bg); }
-.permission-info { display: flex; flex-direction: column; gap: 2px; }
-.permission-name { font-size: 14px; color: var(--text-color); }
-.permission-code { font-size: 12px; color: var(--text-muted); font-family: monospace; }
-.modal-footer { display: flex; justify-content: flex-end; align-items: center; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border-color); }
-.selected-count { margin-right: auto; font-size: 14px; color: var(--text-secondary); }
-</style>

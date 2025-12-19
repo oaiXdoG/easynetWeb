@@ -5,6 +5,7 @@
  */
 import { ref, computed, onMounted } from 'vue'
 import { mockUsers } from '@/mock/data'
+import '@/styles/views/system/user.css'
 // import { systemApi } from '@/api'  // 实际使用时取消注释
 
 const users = ref<any[]>([])
@@ -67,7 +68,7 @@ onMounted(() => loadUsers())
 </script>
 
 <template>
-  <div class="page-container">
+  <div class="page-container system-user-page">
     <div class="page-header">
       <h1 class="page-title">账号管理</h1>
       <button class="btn btn-primary" @click="handleCreate">+ 创建账号</button>
@@ -156,42 +157,3 @@ onMounted(() => loadUsers())
     </div>
   </div>
 </template>
-
-<style scoped>
-.page-container { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-.page-title { font-size: 20px; font-weight: 600; margin: 0; }
-.filter-bar { display: flex; gap: 16px; margin-bottom: 20px; }
-.search-input { width: 300px; height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
-.status-select { height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; min-width: 120px; background: var(--bg-card); color: var(--text-color); }
-.table-wrapper { overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th, .data-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
-.data-table th { background: var(--hover-bg); color: var(--text-secondary); font-weight: 500; }
-.loading-cell, .empty-cell { text-align: center; color: #999; padding: 40px !important; }
-.badge { display: inline-block; padding: 2px 8px; font-size: 12px; border-radius: 4px; background: var(--hover-bg); color: var(--text-secondary); }
-.badge-primary { background: rgba(64, 158, 255, 0.15); color: #1976d2; }
-.status-tag { padding: 2px 8px; border-radius: 4px; font-size: 12px; }
-.status-tag.active { background: rgba(56, 142, 60, 0.15); color: #38a169; }
-.status-tag.inactive { background: rgba(198, 40, 40, 0.15); color: #e74c3c; }
-.actions-cell { white-space: nowrap; }
-.btn-link { background: none; border: none; color: #42b883; cursor: pointer; padding: 4px 8px; font-size: 14px; }
-.btn-link:hover { text-decoration: underline; }
-.btn-link.warning { color: #f39c12; }
-.btn-link.success { color: #27ae60; }
-.btn-link.danger { color: #e74c3c; }
-.btn-link:disabled { color: #ccc; cursor: not-allowed; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-.modal { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; width: 500px; max-width: 90%; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); }
-.modal-header h2 { font-size: 18px; margin: 0; }
-.modal-close { background: none; border: none; font-size: 24px; color: #999; cursor: pointer; }
-.modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-.form-item { display: flex; flex-direction: column; gap: 6px; }
-.form-item label { font-size: 14px; color: var(--text-color); }
-.form-item input { height: 36px; padding: 0 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-color); }
-.form-item input:disabled { background: var(--hover-bg); }
-.modal-footer { display: flex; justify-content: flex-end; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border-color); }
-.btn { padding: 8px 16px; border-radius: 4px; font-size: 14px; cursor: pointer; border: 1px solid var(--border-color); background: var(--bg-card); }
-.btn-primary { background: #42b883; border-color: #42b883; color: #fff; }
-</style>

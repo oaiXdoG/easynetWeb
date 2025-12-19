@@ -1,0 +1,226 @@
+.project-member-page {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.project-member-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.project-member-page .page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.project-member-page .page-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.project-member-page .filter-bar {
+  margin-bottom: 20px;
+}
+
+.project-member-page .search-input {
+  width: 300px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-card);
+  color: var(--text-color);
+}
+
+.project-member-page .table-wrapper {
+  overflow-x: auto;
+}
+
+.project-member-page .data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.project-member-page .data-table th,
+.project-member-page .data-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+
+.project-member-page .data-table th {
+  background: var(--hover-bg);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.project-member-page .loading-cell,
+.project-member-page .empty-cell {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px !important;
+}
+
+.project-member-page .member-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.project-member-page .member-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #42b883;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.project-member-page .member-name {
+  font-weight: 500;
+}
+
+.project-member-page .member-username {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.project-member-page .role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.project-member-page .role-tag {
+  padding: 2px 8px;
+  background: var(--hover-bg);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.project-member-page .role-tag.admin {
+  background: rgba(56, 142, 60, 0.15);
+  color: #38a169;
+}
+
+.project-member-page .no-role {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.project-member-page .actions-cell {
+  white-space: nowrap;
+}
+
+.project-member-page .btn-link {
+  background: none;
+  border: none;
+  color: #42b883;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.project-member-page .btn-link.danger {
+  color: #e74c3c;
+}
+
+.project-member-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.project-member-page .modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: 500px;
+  max-width: 90%;
+}
+
+.project-member-page .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.project-member-page .modal-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.project-member-page .modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+}
+
+.project-member-page .modal-body {
+  padding: 20px;
+}
+
+.project-member-page .modal-body p {
+  margin: 0 0 16px;
+  color: var(--text-secondary);
+}
+
+.project-member-page .checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-member-page .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.project-member-page .checkbox-item input {
+  width: 16px;
+  height: 16px;
+}
+
+.project-member-page .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.project-member-page .btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+.project-member-page .btn-primary {
+  background: #42b883;
+  border-color: #42b883;
+  color: #fff;
+}
