@@ -1060,7 +1060,107 @@ export const mockUserTagRelations = [
 ]
 
 // ============================================================
-// 12. 登录响应模拟数据
+// 12. 当前项目菜单数据（用于侧边栏渲染）
+// ============================================================
+
+// 普通用户菜单（项目管理员）
+export const mockProjectMenus = [
+  {
+    id: 100,
+    groupTitle: '控制台',
+    children: [
+      {
+        id: 101,
+        menuCode: 'dashboard',
+        menuName: '数据看板',
+        icon: 'dashboard',
+        path: '/dashboard',
+        isVisible: true
+      }
+    ]
+  },
+  {
+    id: 200,
+    groupTitle: '日志',
+    children: [
+      {
+        id: 201,
+        menuCode: 'log_app',
+        menuName: '日志',
+        icon: 'receipt_long',
+        path: '/log/app',
+        isVisible: true
+      },
+      {
+        id: 202,
+        menuCode: 'log_server',
+        menuName: '服务器信息日志',
+        icon: 'dns',
+        path: '/log/server',
+        isVisible: true
+      }
+    ]
+  },
+  {
+    id: 300,
+    groupTitle: '项目设置',
+    children: [
+      {
+        id: 301,
+        menuCode: 'project_member',
+        menuName: '成员管理',
+        icon: 'people',
+        path: '/project/member',
+        isVisible: true
+      },
+      {
+        id: 302,
+        menuCode: 'project_role',
+        menuName: '角色管理',
+        icon: 'security',
+        path: '/project/role',
+        isVisible: true
+      },
+      {
+        id: 303,
+        menuCode: 'project_permission',
+        menuName: '权限配置',
+        icon: 'lock',
+        path: '/project/permission',
+        isVisible: true
+      }
+    ]
+  }
+]
+
+// 超级管理员额外菜单
+export const mockSuperAdminMenus = [
+  {
+    id: 400,
+    groupTitle: '系统管理',
+    children: [
+      {
+        id: 401,
+        menuCode: 'system_user',
+        menuName: '账号管理',
+        icon: 'person',
+        path: '/system/user',
+        isVisible: true
+      },
+      {
+        id: 402,
+        menuCode: 'system_project',
+        menuName: '项目管理',
+        icon: 'folder',
+        path: '/system/project',
+        isVisible: true
+      }
+    ]
+  }
+]
+
+// ============================================================
+// 13. 登录响应模拟数据
 // ============================================================
 export const mockLoginResponse = {
   code: 200,
@@ -1097,13 +1197,15 @@ export const mockLoginResponse = {
         'ecommerce:order:view',
         'ecommerce:order:process',
         'ecommerce:member:manage'
-      ]
+      ],
+      // 当前项目的菜单
+      menus: mockProjectMenus
     }
   }
 }
 
 // ============================================================
-// 13. 切换项目响应模拟数据
+// 14. 切换项目响应模拟数据
 // ============================================================
 export const mockSwitchProjectResponse = {
   code: 200,
@@ -1123,36 +1225,8 @@ export const mockSwitchProjectResponse = {
         'crm:opportunity:view',
         'crm:opportunity:manage'
       ],
-      menus: [
-        {
-          id: 20,
-          menuCode: 'crm_dashboard',
-          menuName: '工作台',
-          menuType: 2,
-          icon: 'Dashboard',
-          path: '/crm/dashboard',
-          children: []
-        },
-        {
-          id: 21,
-          menuCode: 'crm_customer',
-          menuName: '客户管理',
-          menuType: 2,
-          icon: 'User',
-          path: '/crm/customer',
-          children: []
-        },
-        {
-          id: 22,
-          menuCode: 'crm_opportunity',
-          menuName: '商机管理',
-          menuType: 2,
-          icon: 'TrendCharts',
-          path: '/crm/opportunity',
-          children: []
-        }
-        // 注意：没有 crm_report，因为销售人员没有 crm:report:view 权限
-      ]
+      // 使用与当前项目相同的菜单格式
+      menus: mockProjectMenus
     }
   }
 }

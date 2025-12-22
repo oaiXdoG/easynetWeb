@@ -4,7 +4,7 @@
 
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
-import { useProjectStore } from './project'
+import { useProjectStore } from '../project'
 
 export const usePermissionStore = defineStore('permission', () => {
   const projectStore = useProjectStore()

@@ -2,6 +2,8 @@
  * 项目相关类型定义
  */
 
+import type { SidebarMenuGroup } from './menu'
+
 // 项目基础信息
 export interface Project {
   id: number
@@ -59,7 +61,7 @@ export interface CurrentProjectContext {
   projectName: string
   roles: RoleItem[]
   permissions: string[]
-  menus?: MenuItem[]
+  menus?: SidebarMenuGroup[]
 }
 
 // 角色项（简化）
@@ -70,7 +72,7 @@ export interface RoleItem {
   isProjectAdmin: boolean
 }
 
-// 菜单项（简化）
+// 菜单项（简化）- 保留用于其他场景
 export interface MenuItem {
   id: number
   menuCode: string

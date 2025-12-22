@@ -54,15 +54,15 @@ const authRoutes: RouteRecordRaw[] = [
       {
         path: 'log',
         name: 'Log',
-        redirect: '/log/game',
+        redirect: '/log/app',
         component: () => import('@/layouts/DefaultLayout.vue'),
         meta: { title: '日志' },
         children: [
           {
-            path: 'game',
+            path: 'app',
             name: 'LogGame',
             component: () => import('@/views/Log/Game.vue'),
-            meta: { title: '游戏日志' }
+            meta: { title: '日志' }
           },
           {
             path: 'server',

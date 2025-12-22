@@ -44,6 +44,23 @@ export interface MenuTreeNode {
   children?: MenuTreeNode[]
 }
 
+// 侧边栏菜单项
+export interface SidebarMenuItem {
+  id: number
+  menuCode: string
+  menuName: string
+  icon: string
+  path: string
+  isVisible: boolean
+}
+
+// 侧边栏菜单分组
+export interface SidebarMenuGroup {
+  id: number
+  groupTitle: string
+  children: SidebarMenuItem[]
+}
+
 // 创建菜单参数
 export interface CreateMenuParams {
   parentId?: number
