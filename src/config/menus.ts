@@ -1,20 +1,78 @@
 /**
  * 平台全量菜单配置
  *
- * 这是前端代码中定义的所有可用菜单
+ * 这是前端代码中定义的所有可用菜单，也是路由的唯一数据源
  * 后端只存储 menuCode，不存储菜单的具体信息（名称、图标、路径等）
  *
  * 权限层级：
  * 平台全量菜单 ⊇ 项目可用菜单 ⊇ 角色可用菜单 ⊇ 用户可见菜单
+ *
+ * 添加新模块只需：
+ * 1. 在此文件添加菜单配置
+ * 2. 创建对应的页面组件
+ * 3. 更新 mock 数据中的 menuCodes
  */
 
 import type { PlatformMenuGroup } from '@/types'
+
+// ============================================================
+// 路径常量（全局统一使用，避免硬编码）
+// ============================================================
+
+/** 所有路径常量 */
+export const PATHS = {
+  // 静态路由（无需登录）
+  LOGIN: '/login',
+  FORBIDDEN: '/403',
+  NOT_FOUND: '/404',
+
+  // 控制台
+  CONSOLE: {
+    DASHBOARD: '/console/dashboard'
+  },
+
+  // 日志
+  LOG: {
+    APP: '/log/app',
+    SERVER: '/log/server'
+  },
+
+  // 项目设置
+  PROJECT: {
+    MEMBER: '/project/member',
+    ROLE: '/project/role',
+    PERMISSION: '/project/permission'
+  },
+
+  // 系统管理（超管专属）
+  SYSTEM: {
+    USER: '/system/user',
+    PROJECT: '/system/project'
+  }
+} as const
+
+/** 默认首页路径 */
+export const PATH_HOME = PATHS.CONSOLE.DASHBOARD
+
+/** 登录页路径 */
+export const PATH_LOGIN = PATHS.LOGIN
+
+/** 403 无权限页路径 */
+export const PATH_FORBIDDEN = PATHS.FORBIDDEN
+
+/** 404 页面不存在路径 */
+export const PATH_NOT_FOUND = PATHS.NOT_FOUND
+
+// ============================================================
+// 菜单配置
+// ============================================================
 
 /**
  * 平台全量菜单定义
  * - 每个菜单项必须有唯一的 menuCode
  * - menuCode 用于与后端数据匹配
- * - 修改菜单只需修改此文件，无需同步后端
+ * - path 和 component 定义路由信息
+ * - 路由会自动从此配置生成，无需手动维护 router/index.ts
  */
 export const platformMenus: PlatformMenuGroup[] = [
   {
@@ -26,7 +84,8 @@ export const platformMenus: PlatformMenuGroup[] = [
         menuCode: 'dashboard',
         menuName: '数据看板',
         icon: 'dashboard',
-        path: '/dashboard',
+        path: PATHS.CONSOLE.DASHBOARD,
+        component: 'Dashboard/Index.vue',
         sortOrder: 1
       }
     ]
@@ -40,14 +99,16 @@ export const platformMenus: PlatformMenuGroup[] = [
         menuCode: 'log_app',
         menuName: '应用日志',
         icon: 'receipt_long',
-        path: '/log/app',
+        path: PATHS.LOG.APP,
+        component: 'Log/Game.vue',
         sortOrder: 1
       },
       {
         menuCode: 'log_server',
         menuName: '服务器日志',
         icon: 'dns',
-        path: '/log/server',
+        path: PATHS.LOG.SERVER,
+        component: 'Log/Server.vue',
         sortOrder: 2
       }
     ]
@@ -61,21 +122,24 @@ export const platformMenus: PlatformMenuGroup[] = [
         menuCode: 'project_member',
         menuName: '成员管理',
         icon: 'people',
-        path: '/project/member',
+        path: PATHS.PROJECT.MEMBER,
+        component: 'Project/Member.vue',
         sortOrder: 1
       },
       {
         menuCode: 'project_role',
         menuName: '角色管理',
         icon: 'security',
-        path: '/project/role',
+        path: PATHS.PROJECT.ROLE,
+        component: 'Project/Role.vue',
         sortOrder: 2
       },
       {
         menuCode: 'project_permission',
         menuName: '权限配置',
         icon: 'lock',
-        path: '/project/permission',
+        path: PATHS.PROJECT.PERMISSION,
+        component: 'Project/Permission.vue',
         sortOrder: 3
       }
     ]
@@ -96,19 +160,29 @@ export const superAdminMenus: PlatformMenuGroup[] = [
         menuCode: 'system_user',
         menuName: '账号管理',
         icon: 'person',
-        path: '/system/user',
+        path: PATHS.SYSTEM.USER,
+        component: 'System/User.vue',
         sortOrder: 1
       },
       {
         menuCode: 'system_project',
         menuName: '项目管理',
         icon: 'folder',
-        path: '/system/project',
+        path: PATHS.SYSTEM.PROJECT,
+        component: 'System/Project.vue',
         sortOrder: 2
       }
     ]
   }
 ]
+
+/**
+ * 获取所有菜单配置（包含超管菜单）
+ * 用于生成路由
+ */
+export function getAllMenus(): PlatformMenuGroup[] {
+  return [...platformMenus, ...superAdminMenus]
+}
 
 /**
  * 获取所有菜单 Code 列表（用于创建项目时的菜单选择）

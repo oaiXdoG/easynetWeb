@@ -15,6 +15,7 @@ export interface PlatformMenuItem {
   menuName: string      // 菜单显示名称
   icon: string          // Material Icons 图标名
   path: string          // 路由路径
+  component: string     // 组件路径（相对于 views 目录）
   sortOrder: number     // 排序
 }
 

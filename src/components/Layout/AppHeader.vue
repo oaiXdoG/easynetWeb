@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore, useProjectStore } from '@/stores'
+import { PATH_HOME, PATH_LOGIN } from '@/config/menus'
 import type { ProjectListItem } from '@/types'
 import '@/styles/layout/header.css'
 
@@ -57,7 +58,7 @@ async function handleSwitchProject(project: ProjectListItem) {
   try {
     await projectStore.switchProject(project.id)
     showProjectDropdown.value = false
-    router.push('/dashboard')
+    router.push(PATH_HOME)
   } catch (error) {
     console.error('切换项目失败:', error)
   }
@@ -67,7 +68,7 @@ async function handleSwitchProject(project: ProjectListItem) {
 async function handleLogout() {
   await authStore.logout()
   projectStore.clearCurrentProject()
-  router.push('/login')
+  router.push(PATH_LOGIN)
 }
 
 // 点击外部关闭下拉菜单
@@ -103,7 +104,7 @@ watch(showProjectDropdown, (val) => {
   <header class="app-header">
     <!-- 左侧 Logo -->
     <div class="header-left">
-      <div class="logo" @click="router.push('/dashboard')">
+      <div class="logo" @click="router.push(PATH_HOME)">
         <span class="logo-text">EasyNet</span>
       </div>
     </div>

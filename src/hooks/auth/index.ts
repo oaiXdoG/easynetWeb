@@ -5,6 +5,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore, useProjectStore, useMenuStore } from '@/stores'
+import { PATH_LOGIN } from '@/config/menus'
 import type { LoginParams } from '@/types'
 
 export function useAuth() {
@@ -45,7 +46,7 @@ export function useAuth() {
     await authStore.logout()
     projectStore.clearCurrentProject()
     menuStore.clearMenus()
-    router.push('/login')
+    router.push(PATH_LOGIN)
   }
 
   /**

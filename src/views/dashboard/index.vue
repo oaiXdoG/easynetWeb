@@ -5,6 +5,7 @@
  */
 import { computed } from 'vue'
 import { useAuthStore, useProjectStore } from '@/stores'
+import { PATHS } from '@/config/menus'
 import '@/styles/views/dashboard.css'
 
 const authStore = useAuthStore()
@@ -84,19 +85,19 @@ const isSuperAdmin = computed(() => authStore.isSuperAdmin)
     <div class="quick-actions">
       <h2 class="section-title">快捷操作</h2>
       <div class="action-cards">
-        <router-link to="/project/member" class="action-card">
+        <router-link :to="PATHS.PROJECT.MEMBER" class="action-card">
           <span class="action-icon">👥</span>
           <span class="action-text">成员管理</span>
         </router-link>
-        <router-link to="/project/role" class="action-card">
+        <router-link :to="PATHS.PROJECT.ROLE" class="action-card">
           <span class="action-icon">🎭</span>
           <span class="action-text">角色管理</span>
         </router-link>
-        <router-link to="/project/permission" class="action-card">
+        <router-link :to="PATHS.PROJECT.PERMISSION" class="action-card">
           <span class="action-icon">🔐</span>
           <span class="action-text">权限配置</span>
         </router-link>
-        <router-link v-if="isSuperAdmin" to="/system/user" class="action-card">
+        <router-link v-if="isSuperAdmin" :to="PATHS.SYSTEM.USER" class="action-card">
           <span class="action-icon">⚙️</span>
           <span class="action-text">系统管理</span>
         </router-link>

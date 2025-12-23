@@ -2,6 +2,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth } from '@/hooks'
+import { PATH_HOME } from '@/config/menus'
 import '@/styles/views/auth/login.css'
 
 const router = useRouter()
@@ -48,7 +49,7 @@ async function handleSubmit() {
     await login(formData)
 
     // 获取重定向地址
-    const redirect = (route.query.redirect as string) || '/dashboard'
+    const redirect = (route.query.redirect as string) || PATH_HOME
     router.push(redirect)
   } catch (error: any) {
     errorMsg.value = error.message || '登录失败，请重试'

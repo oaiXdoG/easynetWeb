@@ -1,133 +1,114 @@
 /**
  * 路由配置
  *
- * 路由与页面对应关系：
- * /login          → views/Auth/Login.vue
- * /dashboard      → views/Dashboard/Index.vue
- * /system/*       → views/System/*.vue        (API: api/system)
- * /project/*      → views/Project/*.vue       (API: api/project)
- * /403, /404      → views/Error/*.vue
+ * 路由自动从 config/menus.ts 生成，无需手动维护
+ * 只有静态路由（登录、错误页面）需要在此文件定义
  */
 
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import { setupRouterGuards } from './guards'
+import { getAllMenus, PATHS, PATH_HOME, PATH_NOT_FOUND } from '@/config/menus'
+import type { PlatformMenuGroup } from '@/types'
+
+// 动态导入组件的映射
+const viewModules = import.meta.glob('@/views/**/*.vue')
+
+/**
+ * 根据组件路径获取动态导入函数
+ */
+function getViewComponent(componentPath: string) {
+  const path = `/src/views/${componentPath}`
+  if (viewModules[path]) {
+    return viewModules[path]
+  }
+  console.warn(`Component not found: ${path}`)
+  return () => import('@/views/Error/404.vue')
+}
+
+/**
+ * 从菜单配置生成路由
+ */
+function generateRoutesFromMenus(menus: PlatformMenuGroup[]): RouteRecordRaw[] {
+  const routes: RouteRecordRaw[] = []
+
+  for (const group of menus) {
+    // 检查是否有嵌套路径（如 /log/app, /project/member）
+    const hasNestedPaths = group.children.some(item => item.path.split('/').length > 2)
+
+    if (hasNestedPaths) {
+      // 嵌套路由：创建父路由
+      const parentPath = group.children[0].path.split('/')[1] // 获取第一级路径
+      const childRoutes: RouteRecordRaw[] = group.children.map(item => {
+        const childPath = item.path.split('/').slice(2).join('/') // 获取子路径
+        return {
+          path: childPath,
+          name: item.menuCode,
+          component: getViewComponent(item.component),
+          meta: { title: item.menuName, menuCode: item.menuCode }
+        }
+      })
+
+      routes.push({
+        path: parentPath,
+        name: group.groupCode,
+        meta: { title: group.groupTitle },
+        children: childRoutes
+      })
+    } else {
+      // 扁平路由：直接添加
+      for (const item of group.children) {
+        const path = item.path.startsWith('/') ? item.path.slice(1) : item.path
+        routes.push({
+          path,
+          name: item.menuCode,
+          component: getViewComponent(item.component),
+          meta: { title: item.menuName, menuCode: item.menuCode }
+        })
+      }
+    }
+  }
+
+  return routes
+}
 
 // 静态路由（无需登录）
 const staticRoutes: RouteRecordRaw[] = [
   {
-    path: '/login',
+    path: PATHS.LOGIN,
     name: 'Login',
     component: () => import('@/views/Auth/Login.vue'),
     meta: { title: '登录' }
   },
   {
-    path: '/403',
+    path: PATHS.FORBIDDEN,
     name: 'Forbidden',
     component: () => import('@/views/Error/403.vue'),
     meta: { title: '无权限' }
   },
   {
-    path: '/404',
+    path: PATHS.NOT_FOUND,
     name: 'NotFound',
     component: () => import('@/views/Error/404.vue'),
     meta: { title: '页面不存在' }
   }
 ]
 
+// 从菜单配置生成业务路由
+const menuRoutes = generateRoutesFromMenus(getAllMenus())
+
 // 需要认证的路由
 const authRoutes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('@/layouts/DefaultLayout.vue'),
-    redirect: '/dashboard',
-    children: [
-      // 控制台
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/Dashboard/Index.vue'),
-        meta: { title: '控制台' }
-      },
-
-      // 日志中心
-      {
-        path: 'log',
-        name: 'Log',
-        redirect: '/log/app',
-        component: () => import('@/layouts/DefaultLayout.vue'),
-        meta: { title: '日志' },
-        children: [
-          {
-            path: 'app',
-            name: 'LogGame',
-            component: () => import('@/views/Log/Game.vue'),
-            meta: { title: '日志' }
-          },
-          {
-            path: 'server',
-            name: 'LogServer',
-            component: () => import('@/views/Log/Server.vue'),
-            meta: { title: '服务器信息日志' }
-          }
-        ]
-      },
-      // 系统管理 (超管) - 对应 api/system
-      {
-        path: 'system',
-        name: 'System',
-        redirect: '/system/user',
-        meta: { title: '系统管理' },
-        children: [
-          {
-            path: 'user',
-            name: 'SystemUser',
-            component: () => import('@/views/System/User.vue'),
-            meta: { title: '账号管理' }
-          },
-          {
-            path: 'project',
-            name: 'SystemProject',
-            component: () => import('@/views/System/Project.vue'),
-            meta: { title: '项目管理' }
-          }
-        ]
-      },
-
-      // 项目设置 - 对应 api/project
-      {
-        path: 'project',
-        name: 'Project',
-        redirect: '/project/member',
-        meta: { title: '项目设置' },
-        children: [
-          {
-            path: 'member',
-            name: 'ProjectMember',
-            component: () => import('@/views/Project/Member.vue'),
-            meta: { title: '成员管理' }
-          },
-          {
-            path: 'role',
-            name: 'ProjectRole',
-            component: () => import('@/views/Project/Role.vue'),
-            meta: { title: '角色管理' }
-          },
-          {
-            path: 'permission',
-            name: 'ProjectPermission',
-            component: () => import('@/views/Project/Permission.vue'),
-            meta: { title: '权限配置' }
-          }
-        ]
-      },
-    ]
+    redirect: PATH_HOME,
+    children: menuRoutes
   },
-
   // 捕获所有未匹配路由
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/404'
+    redirect: PATH_NOT_FOUND
   }
 ]
 
