@@ -2,8 +2,6 @@
  * 项目相关类型定义
  */
 
-import type { SidebarMenuGroup } from './menu'
-
 // 项目基础信息
 export interface Project {
   id: number
@@ -35,6 +33,7 @@ export interface CreateProjectParams {
   projectName: string
   description?: string
   logo?: string
+  menuCodes?: string[]  // 项目可用的菜单 Code 列表
 }
 
 // 更新项目参数
@@ -44,6 +43,7 @@ export interface UpdateProjectParams {
   logo?: string
   status?: number
   sortOrder?: number
+  menuCodes?: string[]  // 更新项目菜单
 }
 
 // 项目查询参数
@@ -54,14 +54,20 @@ export interface ProjectQueryParams {
   pageSize?: number
 }
 
-// 当前项目上下文
+/**
+ * 当前项目上下文
+ *
+ * 后端返回的数据结构：
+ * - visibleMenuCodes: 用户在当前项目下可见的菜单 Code 列表
+ * - 前端根据 visibleMenuCodes 从 platformMenus 中过滤出实际显示的菜单
+ */
 export interface CurrentProjectContext {
   id: number
   projectCode: string
   projectName: string
   roles: RoleItem[]
   permissions: string[]
-  menus?: SidebarMenuGroup[]
+  visibleMenuCodes: string[]  // 用户可见的菜单 Code 列表（角色菜单的并集）
 }
 
 // 角色项（简化）

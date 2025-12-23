@@ -1060,103 +1060,52 @@ export const mockUserTagRelations = [
 ]
 
 // ============================================================
-// 12. 当前项目菜单数据（用于侧边栏渲染）
+// 12. 项目菜单配置（后端存储的 menuCode 列表）
 // ============================================================
 
-// 普通用户菜单（项目管理员）
-export const mockProjectMenus = [
-  {
-    id: 100,
-    groupTitle: '控制台',
-    children: [
-      {
-        id: 101,
-        menuCode: 'dashboard',
-        menuName: '数据看板',
-        icon: 'dashboard',
-        path: '/dashboard',
-        isVisible: true
-      }
-    ]
-  },
-  {
-    id: 200,
-    groupTitle: '日志',
-    children: [
-      {
-        id: 201,
-        menuCode: 'log_app',
-        menuName: '日志',
-        icon: 'receipt_long',
-        path: '/log/app',
-        isVisible: true
-      },
-      {
-        id: 202,
-        menuCode: 'log_server',
-        menuName: '服务器信息日志',
-        icon: 'dns',
-        path: '/log/server',
-        isVisible: true
-      }
-    ]
-  },
-  {
-    id: 300,
-    groupTitle: '项目设置',
-    children: [
-      {
-        id: 301,
-        menuCode: 'project_member',
-        menuName: '成员管理',
-        icon: 'people',
-        path: '/project/member',
-        isVisible: true
-      },
-      {
-        id: 302,
-        menuCode: 'project_role',
-        menuName: '角色管理',
-        icon: 'security',
-        path: '/project/role',
-        isVisible: true
-      },
-      {
-        id: 303,
-        menuCode: 'project_permission',
-        menuName: '权限配置',
-        icon: 'lock',
-        path: '/project/permission',
-        isVisible: true
-      }
-    ]
-  }
+/**
+ * 项目可用菜单配置
+ * 后端只存储 menuCode，不存储菜单详情
+ * 菜单详情由前端 src/config/menus.ts 定义
+ */
+
+// 电商项目可用的菜单（超管创建项目时配置）
+export const mockEcommerceProjectMenuCodes = [
+  // 控制台
+  'console', 'dashboard',
+  // 日志（该项目只开放应用日志，不开放服务器日志）
+  'log', 'log_app',
+  // 项目设置
+  'project_settings', 'project_member', 'project_role', 'project_permission'
 ]
 
-// 超级管理员额外菜单
-export const mockSuperAdminMenus = [
-  {
-    id: 400,
-    groupTitle: '系统管理',
-    children: [
-      {
-        id: 401,
-        menuCode: 'system_user',
-        menuName: '账号管理',
-        icon: 'person',
-        path: '/system/user',
-        isVisible: true
-      },
-      {
-        id: 402,
-        menuCode: 'system_project',
-        menuName: '项目管理',
-        icon: 'folder',
-        path: '/system/project',
-        isVisible: true
-      }
-    ]
-  }
+// CRM 项目可用的菜单
+export const mockCrmProjectMenuCodes = [
+  // 控制台
+  'console', 'dashboard',
+  // 日志（全部开放）
+  'log', 'log_app', 'log_server',
+  // 项目设置
+  'project_settings', 'project_member', 'project_role', 'project_permission'
+]
+
+/**
+ * 角色菜单配置
+ * 角色菜单必须是项目菜单的子集
+ */
+
+// 电商项目管理员 - 拥有项目所有菜单
+export const mockEcommerceAdminMenuCodes = [...mockEcommerceProjectMenuCodes]
+
+// 电商运营人员 - 只有控制台和日志
+export const mockEcommerceOperatorMenuCodes = [
+  'console', 'dashboard',
+  'log', 'log_app'
+]
+
+// CRM 销售人员 - 只有控制台
+export const mockCrmSalesMenuCodes = [
+  'console', 'dashboard'
 ]
 
 // ============================================================
@@ -1181,7 +1130,7 @@ export const mockLoginResponse = {
       { id: 1, projectCode: 'ecommerce', projectName: '电商管理系统', description: null, logo: null, status: 1, isDefault: true },
       { id: 2, projectCode: 'crm', projectName: 'CRM客户管理', description: null, logo: null, status: 1, isDefault: false }
     ],
-    // 默认项目的权限信息
+    // 默认项目的上下文信息
     currentProject: {
       id: 1,
       projectCode: 'ecommerce',
@@ -1198,8 +1147,8 @@ export const mockLoginResponse = {
         'ecommerce:order:process',
         'ecommerce:member:manage'
       ],
-      // 当前项目的菜单
-      menus: mockProjectMenus
+      // 用户可见的菜单 Code 列表（角色菜单的并集）
+      visibleMenuCodes: mockEcommerceAdminMenuCodes
     }
   }
 }
@@ -1225,14 +1174,14 @@ export const mockSwitchProjectResponse = {
         'crm:opportunity:view',
         'crm:opportunity:manage'
       ],
-      // 使用与当前项目相同的菜单格式
-      menus: mockProjectMenus
+      // 用户可见的菜单 Code 列表（销售人员只有控制台）
+      visibleMenuCodes: mockCrmSalesMenuCodes
     }
   }
 }
 
 // ============================================================
-// 14. 获取用户权限响应模拟数据 (用于页面/按钮级权限判断)
+// 15. 获取用户权限响应模拟数据 (用于页面/按钮级权限判断)
 // ============================================================
 export const mockGetUserPermissionsResponse = {
   code: 200,
