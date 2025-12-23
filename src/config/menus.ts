@@ -198,6 +198,30 @@ export function getAllMenuCodes(): string[] {
   return codes
 }
 
+function collectMenuCodes(menus: PlatformMenuGroup[], output: Set<string>) {
+  for (const group of menus) {
+    output.add(group.groupCode)
+    for (const item of group.children) {
+      output.add(item.menuCode)
+    }
+  }
+}
+
+function warnUnknownMenuCodes(visibleCodes: string[], includeSuperAdmin: boolean) {
+  if (visibleCodes.length === 0) return
+
+  const knownCodes = new Set<string>()
+  collectMenuCodes(platformMenus, knownCodes)
+  if (includeSuperAdmin) collectMenuCodes(superAdminMenus, knownCodes)
+
+  const unknownCodes = visibleCodes.filter(code => !knownCodes.has(code))
+  if (unknownCodes.length > 0) {
+    console.warn(
+      `[menus] Unknown menu codes from backend (${unknownCodes.length}): ${unknownCodes.join(', ')}`
+    )
+  }
+}
+
 /**
  * 根据 menuCode 列表过滤菜单
  * @param visibleCodes 可见的 menuCode 列表（从后端获取）
@@ -208,10 +232,9 @@ export function filterMenusByCode(
   includeSuperAdmin: boolean = false
 ): PlatformMenuGroup[] {
   const codeSet = new Set(visibleCodes)
+  warnUnknownMenuCodes(visibleCodes, includeSuperAdmin)
 
-  // 过滤普通菜单
   const filtered = platformMenus
-    .filter(group => codeSet.has(group.groupCode))
     .map(group => ({
       ...group,
       children: group.children.filter(item => codeSet.has(item.menuCode))

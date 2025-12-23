@@ -7,7 +7,7 @@ import { useAuthStore, useProjectStore, useMenuStore } from '@/stores'
 import { platformMenus, superAdminMenus, PATH_HOME, PATH_LOGIN, PATH_FORBIDDEN, PATH_NOT_FOUND } from '@/config/menus'
 
 // 白名单路由（无需登录）
-const whiteList = [PATH_LOGIN, PATH_NOT_FOUND, PATH_FORBIDDEN]
+const whiteList = new Set<string>([PATH_LOGIN, PATH_NOT_FOUND, PATH_FORBIDDEN])
 
 // 分组路径映射（用于动态 redirect）
 // 只有嵌套路由才需要（如 /project, /log），扁平路由不需要（如 /dashboard）
@@ -36,7 +36,7 @@ export function setupRouterGuards(router: Router) {
     document.title = 'EasyNet 管理平台'
 
     // 白名单路由直接放行
-    if (whiteList.includes(to.path)) {
+    if (whiteList.has(to.path)) {
       // 已登录访问登录页，跳转到首页
       if (to.path === PATH_LOGIN && authStore.isLoggedIn) {
         next(PATH_HOME)
