@@ -111,18 +111,7 @@ CREATE TABLE sys_project_menu (
     INDEX idx_menu_id (menu_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='项目启用菜单表';
 
--- 8. 角色-菜单分组关系表（必须先分配分组）
-CREATE TABLE sys_role_menu_group (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '关系ID',
-    role_id BIGINT UNSIGNED NOT NULL COMMENT '角色ID',
-    menu_group_id BIGINT UNSIGNED NOT NULL COMMENT '菜单分组ID',
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    UNIQUE KEY uk_role_menu_group (role_id, menu_group_id),
-    INDEX idx_role_id (role_id),
-    INDEX idx_menu_group_id (menu_group_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色-菜单分组关系表';
-
--- 9. 角色-菜单关系表（菜单必须属于已分配的分组）
+-- 8. 角色-菜单关系表
 CREATE TABLE sys_role_menu (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '关系ID',
     role_id BIGINT UNSIGNED NOT NULL COMMENT '角色ID',
@@ -133,7 +122,7 @@ CREATE TABLE sys_role_menu (
     INDEX idx_menu_id (menu_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色-菜单关系表';
 
--- 10. 操作权限表（项目级，用于后端API鉴权）
+-- 9. 操作权限表（项目级，用于后端API鉴权）
 CREATE TABLE sys_permission (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '权限ID',
     project_id BIGINT UNSIGNED NOT NULL COMMENT '项目ID',
@@ -148,7 +137,7 @@ CREATE TABLE sys_permission (
     INDEX idx_status (status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作权限表';
 
--- 11. 角色-权限关系表
+-- 10. 角色-权限关系表
 CREATE TABLE sys_role_permission (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '关系ID',
     role_id BIGINT UNSIGNED NOT NULL COMMENT '角色ID',
@@ -159,7 +148,7 @@ CREATE TABLE sys_role_permission (
     INDEX idx_permission_id (permission_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色-权限关系表';
 
--- 12. 操作日志表
+-- 11. 操作日志表
 CREATE TABLE sys_operation_log (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '日志ID',
     user_id BIGINT UNSIGNED COMMENT '用户ID',
@@ -205,7 +194,6 @@ CREATE TABLE sys_operation_log (
 4. 权限层级：
    平台菜单（sys_menu）
        ⊇ 项目菜单（sys_project_menu）
-       ⊇ 角色菜单分组（sys_role_menu_group）
        ⊇ 角色菜单（sys_role_menu）
        ⊇ 用户可见菜单
 
